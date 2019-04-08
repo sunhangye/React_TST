@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function Book(title,price) {
+      this.title = title;
+      this.price = price;
+    }
+    Book.prototype.getTitle = function() {
+      console.log(this.title);
+    }
+    Book.prototype.getPrice = function() {
+      console.log(this.price);
+    }
+    var book = new Book('css揭秘', 20);
+    book.getTitle();
+    book.getPrice();
+    /*
+    *  实现create方法
+    *  @obj  被继承的对象
+    */
+    function create(obj) {
+      // 创建一个类
+      function F() {}
+      // 让原型指向obj
+      F.prototype = obj
+      return new F()
+    }
+    var myBook = create(book)
+    console.log(myBook);
+    myBook.title = 'html 一本书';
+    myBook.getTitle();
+    book.getTitle();
+  </script>
+</body>
+</html>

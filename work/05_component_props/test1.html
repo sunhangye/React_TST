@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>04_component_state</title>
+</head>
+
+<body>
+  <h2>04_component_state</h2>
+  <div id="example1"></div>
+  <hr>
+  <div id="example2"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    /*
+  需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
+  1). 姓名是必须的
+  2). 如果性别没有指定, 默认为男
+  3). 如果年龄没有指定, 默认为18
+  */
+
+  /*
+  props属性:
+  值是对象
+  包含组件标签属性数据
+  */
+class Person extends React.Component {
+
+    state = {
+      time: Date.now()
+    }
+
+    static propTypes = {
+      name: PropTypes.string.isRequired, // 属性名/属性值的类型/属性的必要性
+      age: PropTypes.number,
+      sex: PropTypes.string
+    }
+
+    static defaultProps = {
+      name: 'sunhangye',
+      sex: '男',
+    }
+
+    render() {
+      console.log('render()', this)
+      // 取出所有标签属性数据
+      const {name, sex, age} = this.props
+
+      return (
+        <ul>
+          <li>姓名：{name}</li>
+          <li>性别：{sex}</li>
+          <li>年龄： {age}</li>
+        </ul>
+      )
+    }
+  }  
+
+
+  const p1 = {
+    name: 'Tom',
+    sex: '男',
+    age: 18
+  }
+  const p2 = {
+  name: 'Tom111',
+  sex: '女',
+  age: 182
+  }
+    ReactDOM.render(<Person name={p1.name} sex={p1.sex} age={p1.age} />, document.getElementById('example1'));
+
+    ReactDOM.render(
+    <Person  />, document.getElementById('example2'));
+  </script>
+</body>
+
+</html>

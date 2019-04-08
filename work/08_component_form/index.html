@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>09_form</title>
+</head>
+
+<body>
+  <div id="example"></div>
+  <hr>
+  <div id="example2"></div>
+
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    /*
+  需求: 自定义包含表单的组件
+    1. 界面如下所示
+    2. 输入用户名密码后, 点击登陆提示输入信息
+    3. 不提交表单
+
+  收集表单数据的方式
+    1. 手动收集(提交时)
+    2. 自动收集(输入时)
+  */
+
+  class Form extends React.Component {
+    login = (event) => {
+      event.preventDefault()
+
+      const username = this.refs.username.value.trim()
+      const pwd = this.refs.pwd.value.trim()
+
+      alert(`发送ajax请求username=${username}&pwd=${pwd}`)
+    }
+    render() {
+      return (
+        <form>
+          用户名： <input ref="username"/>
+          密码： <input type="password" ref="pwd" />
+          <button onClick={this.login}>登录</button>
+        </form>
+      )
+    }
+  }
+
+  class Form2 extends React.Component {
+    state = { 
+      username: 'admin',
+      pwd: '123',
+      username2: 'admin2',
+      pwd2: '321'
+     }
+
+     login =(event) => {
+       event.preventDefault()
+       const {username, pwd} = this.state
+       alert(`发送ajax请求username=${username}&pwd=${pwd}`)
+     }
+
+     login2 =(event) => {
+     event.preventDefault()
+     const {username2, pwd2} = this.state
+     alert(`发送ajax请求username=${username2}&pwd=${pwd2}`)
+     }
+
+     handleUsernameChange = (event) => {
+       const username = event.target.value
+       this.setState({
+         username
+       })
+     }
+     handlePasswordChange = (event) => {
+      const pwd = event.target.value
+      this.setState({
+        pwd
+      })
+     }
+
+     handleChange = (event, name) => {
+       const value = event.target.value
+
+       this.setState({
+         [name]: value
+       })
+
+       const {username2, pwd2} = this.state
+     }
+    render() { 
+
+      const {username, pwd, username2, pwd2} = this.state
+      return ( 
+        <div>
+          <form>
+            用户名： <input value={username} onChange={this.handleUsernameChange} />
+            密码： <input type="password" value={pwd} onChange={this.handlePasswordChange} />
+            <button onClick={this.login}>登录</button>
+            用户名： <input value={username2} onChange={((event)=> this.handleChange(event, 'username2'))} />
+            密码： <input type="password" value={pwd2} onChange={((event)=> this.handleChange(event, 'pwd2'))} />
+            <button onClick={this.login2}>登录</button>
+          </form>
+          <hr />
+          
+        </div>
+       );
+    }
+  }
+   
+
+  ReactDOM.render(<Form/>, document.getElementById('example'))
+
+  ReactDOM.render(
+  <Form2 />, document.getElementById('example2'))
+  
+
+
+</script>
+</body>
+
+</html>

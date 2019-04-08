@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>04_component_state</title>
+</head>
+<style>
+  ul {
+    height: 42px;
+    line-height: 22px;
+    overflow: hidden;
+  }
+  li span{
+    margin-right: 20px;
+  }
+  .show {
+    display: block;
+  }
+  .hide {
+  display: none;
+  }
+</style>
+<body>
+  <h2>04_component_state</h2>
+  <div id="example1"></div>
+
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    /*
+      
+      state
+      1. 组件对象的一个属性, 值是对象
+      2. 包含一些可以变化的数据, 组件的显示是根据state中的数据进行显示的
+      3. 要想更新组件的显示: 通过setState()更新组件的状态数据
+      自定义的组件方法
+      this默认是undefined
+      指定this为组件对象? 改为箭头函数
+
+
+      在定义事件回调的时候，我们可以通过bind方法传递自定义属性，但是绝对不能修改react作用域。
+      this.changeNav.bind(this, item.id)
+    */
+
+    var data = [
+      ['网页','资讯', '视频'],
+      ['知道','文库', '贴吧'],
+      ['采购','地图', '更多'],
+    ]
+
+    class Like extends React.Component {
+      state = {
+        num: 0
+      }
+      getInitialState = function() {
+        state = {
+        num: 0
+        }
+      }
+      
+      changeNav = () => {
+        this.setState({
+          num: ++this.state.num
+        })
+      }
+      createSpan = (value) => {
+        return(
+          value.map((item, index) => {
+            return <span key="{index}">{item}</span>
+          })
+        )
+      }
+      // 创建li标签
+      createList = () => {
+        var me = this;
+        console.log(me)
+        return (
+          data.map((item, index) => {
+            
+            return <li key={index}
+              style={{display: me.state.num % this.props.data.length === index ? 'block' : 'none'}}>
+              {this.createSpan(item)}</li>
+          })
+        )
+      }
+
+      
+      // 渲染输出虚拟DOM
+      render(){
+        return (
+          <ul>
+          <span onClick={this.changeNav}>换一换</span>
+              {this.createList()}
+          </ul>
+        )
+      }
+    }
+    ReactDOM.render(
+    <Like data={data} />, document.getElementById('example1'));
+  </script>
+</body>
+
+</html>

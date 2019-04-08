@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>01_helloworld</title>
+</head>
+
+<body>
+  <div id="test"></div>
+  <div id="test1"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/babel"> // 声明babel
+    // 创建虚拟DOM元素
+    var vDom = <h2>Hello world</h2>
+    ReactDOM.render(vDom, document.getElementById('test'))
+
+    /*
+      创建虚拟dom - react.development.js
+       React.createClass
+       React.createElement
+          第一个参数 虚拟DOM -- div h1,也可以是组件名称
+          第二个参数 参数属性对象
+          第三个参数  虚拟DOM 子虚拟DOM
+
+        Type: 虚拟DOM类型 -- h1
+        Props: 组件特征
+            Children 表示字元素
+            其他的属性就是Dom上的属性
+      渲染虚拟dom - react-dom.js
+      ReactDOM.render
+          第一个参数 虚拟DOM 
+          第二个参数 真实DOM容器
+    */
+
+    var h1 = React.createElement(
+      'h1',
+      {
+        id: 'title',
+      },
+      '51cto学院'
+    )
+    console.log(h1);
+    ReactDOM.render(h1, document.getElementById('test1'))
+  </script>
+</body>
+
+</html>
